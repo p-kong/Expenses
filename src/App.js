@@ -17,7 +17,6 @@ function App() {
 
       <IncExp />
       <Transactions />
-      <AddTransactions />
     </div>
   );
 }
