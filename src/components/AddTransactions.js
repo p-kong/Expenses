@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { GlobalContext } from '../context/GlobalState';
 
 const AddTransactions = props => {
-  const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState('');
+  const { addTransaction } = useContext(GlobalContext);
 
-  const descriptionHandler = event => {
-    setDescription(event.target.value);
+  const [text, setText] = useState('');
+  const [amount, setAmount] = useState(0);
+
+  const textHandler = event => {
+    setText(event.target.value);
   };
 
   const amountHandler = event => {
@@ -14,9 +17,13 @@ const AddTransactions = props => {
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log('clicked');
-    props.addTransaction({ description: description, amount: amount });
-    console.log(description);
+
+    const newTransaction = {
+      id: Math.floor(Math.random() * 100),
+      text: text,
+      amount: +amount,
+    };
+    addTransaction(newTransaction);
   };
 
   return (
@@ -28,8 +35,8 @@ const AddTransactions = props => {
           <input
             type="text"
             placeholder="Enter text..."
-            value={description}
-            onChange={descriptionHandler}
+            value={text}
+            onChange={textHandler}
           ></input>
         </div>
         <div className="form-control">
